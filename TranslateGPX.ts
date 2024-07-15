@@ -12,18 +12,18 @@ type ProcessedGPX = {
 
 export default class TranslateGPX {
   // rome-ignore lint/suspicious/noExplicitAny: <explanation>
-  public static async execute(gpx: any): Promise<ProcessedGPX> {
-    const parsedGpx = await parseGpx(gpx);
+  public static async execute(input: any): Promise<ProcessedGPX> {
+    const parsedGpx = await parseGpx(input);
     const totalDistance = (this.calculateTotalDistance(parsedGpx) / 1000).toFixed(2); // returns distance in kilometers
     const trackPoints = this.calculateDistanceAndElevation(parsedGpx); // returns array of objects with distance from start and altitude
     const elevations = this.calculateElevations(parsedGpx);
-    const result: ProcessedGPX = {
+    const output: ProcessedGPX = {
       totalDistance: parseFloat(totalDistance),
       segments: this.sampleArrayAtIntervals(trackPoints ?? [], 40),
       elevationGain: elevations.elevationGain,
       elevationLoss: elevations.elevationLoss,
     };
-    return result;
+    return output;
   }
 
   private static calculateTotalDistance(gpx: Gpx, track = 0): number {
@@ -43,15 +43,12 @@ export default class TranslateGPX {
   private static calculateHaversineDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
     const R = 6371e3; // Earth radius in meters
     const toRadians = (angle: number) => angle * (Math.PI / 180);
-
     const φ1 = toRadians(lat1);
     const φ2 = toRadians(lat2);
     const Δφ = toRadians(lat2 - lat1);
     const Δλ = toRadians(lon2 - lon1);
-
     const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
     return R * c; // in meters
   }
 
