@@ -40,6 +40,6 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-app.listen(process.env.HTTP_SERVER_PORT, () => {
-  console.log(`Server is running on http://localhost:${process.env.HTTP_SERVER_PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
