@@ -8,6 +8,9 @@
     "build": "npm install && tsc",
     "start": "node ./dist/server.js"
   },
+  "engines": {
+    "node": ">=20.11.0"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
