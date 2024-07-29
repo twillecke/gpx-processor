@@ -2,14 +2,21 @@ import * as dotenv from 'dotenv';
 import express from 'express';
 import multer from 'multer';
 import TranslateGPX from './TranslateGPX';
+import { rateLimit } from 'express-rate-limit';
 const cors = require('cors');
 const compression = require('compression');
+
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  limit: 60,
+});
 
 dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(compression());
 app.use(cors());
+app.use(limiter);
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
