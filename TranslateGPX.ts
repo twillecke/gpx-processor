@@ -1,13 +1,17 @@
-import { Gpx, GpxWaypoint, parseGpx } from 'practical-gpx-to-js';
+import { Gpx, parseGpx } from 'practical-gpx-to-js';
 
-type Segment = { altitude: number | null; distanceFromStart: string | null | number };
+type Segment = { altitude: number | null; distanceFromStart: string | null | number; waypoint?: Waypoint };
+
+type Waypoint = {
+  title: string;
+  description?: string;
+};
 
 type ProcessedGPX = {
   totalDistance: number;
   segments: Array<Segment>; // array of trackpoints to generate distance x elevation graph
   elevationGain: number; // how much you climb in total not counting descents
   elevationLoss: number; // how much you descend in total not counting climbs
-  waypoints?: Array<GpxWaypoint>; // array of points of interest to add relevant info
 };
 
 export default class TranslateGPX {
@@ -101,6 +105,9 @@ export default class TranslateGPX {
     if (sampledArray[sampledArray.length - 1] !== array[array.length - 1]) {
       sampledArray.push(array[array.length - 1]);
     }
+    // add waypoint to first and last element
+    sampledArray[0].waypoint = { title: 'Start' };
+    sampledArray[sampledArray.length - 1].waypoint = { title: 'End' };
     return sampledArray;
   }
 }
