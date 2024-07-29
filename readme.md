@@ -1,0 +1,2 @@
+# GPX Processor
+This is application runs a server that processes uploaded GPX files and returns the total distance tracked as well as an array of points with distance since start and altitude. Its main use is to parse and convert GPX files to JSON format for front-end applications.
