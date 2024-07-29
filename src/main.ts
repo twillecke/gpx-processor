@@ -3,10 +3,12 @@ import express from 'express';
 import multer from 'multer';
 import TranslateGPX from './TranslateGPX';
 const cors = require('cors');
+const compression = require('compression');
 
 dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(compression());
 app.use(cors());
 
 const storage = multer.memoryStorage();
