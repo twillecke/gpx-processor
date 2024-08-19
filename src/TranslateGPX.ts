@@ -16,7 +16,7 @@ type Coordinates = {
   lon: number;
 };
 
-type ProcessedGPX = {
+export type ProcessedGPX = {
 	location: Coordinates | null;
 	totalDistance: number;
 	segments: Array<Segment>; // array of trackpoints to generate distance x elevation graph
