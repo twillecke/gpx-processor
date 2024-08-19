@@ -22,7 +22,7 @@ export default class Track {
 		this.trackData = trackData;
 	}
 
-	static async execute(input: Input): Promise<Track> {
+	static async create(input: Input): Promise<Track> {
 		const metadata: TrackMetadata = {
 			trackId: crypto.randomUUID(),
 			createdAt: new Date(),

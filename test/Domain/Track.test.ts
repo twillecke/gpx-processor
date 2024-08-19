@@ -185,7 +185,7 @@ test("Should create Track", async () => {
 			elevationLoss: -679.87,
 		},
 	};
-	const track = await Track.execute(input);
+	const track = await Track.create(input);
 
 	expect(track.metadata.trackId).toBeTruthy();
 	expect(track.metadata.createdAt).toBeTruthy();
