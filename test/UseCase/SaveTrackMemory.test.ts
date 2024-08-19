@@ -1,5 +1,5 @@
 import { Input } from "../../src/Domain/Track";
-import TrackRepositoryMemory from "../../src/Repository/TrackRepository";
+import TrackRepositoryMemory from "../../src/Repository/TrackRepositoryMemory";
 import UserSaveNewTrack from "../../src/UseCase/UserSaveNewTrack";
 
 test("Should save Track in memory", async () => {

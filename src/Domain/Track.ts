@@ -1,4 +1,4 @@
-import { TrackMetadata } from "../Repository/TrackRepository";
+import { TrackMetadata } from "../Repository/TrackRepositoryMemory";
 import { ProcessedGPX } from "../UseCase/TranslateGPX";
 import crypto from "crypto";
 

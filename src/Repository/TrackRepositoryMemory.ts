@@ -1,5 +1,6 @@
 import Track from "../Domain/Track";
 import { ProcessedGPX } from "../UseCase/TranslateGPX";
+import { TrackRepository } from "./RepositoryInterfaces";
 
 export type FullTrackData = {
 	metadata: TrackMetadata;
@@ -13,14 +14,6 @@ export type TrackMetadata = {
 	imageUrl?: string;
 	createdAt: Date;
 };
-
-interface TrackRepository {
-	getAllTracks(): Array<FullTrackData>;
-	getAllTracksMetadata(): Array<TrackMetadata>;
-	getTrackById(id: string): FullTrackData;
-	saveTrack(track: FullTrackData): void;
-	removeTrack(id: string): void;
-}
 
 export default class TrackRepositoryMemory implements TrackRepository {
 	private tracks: Array<FullTrackData> = [];

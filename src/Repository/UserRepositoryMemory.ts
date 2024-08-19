@@ -1,13 +1,9 @@
+import { UserRepository } from "./RepositoryInterfaces";
+
 export type User = {
 	userId: string;
 	name: string;
 };
-
-interface UserRepository {
-	getUser(id: string): Promise<User>;
-	saveUser(user: User): Promise<string>;
-	removeUser(id: string): Promise<void>;
-}
 
 export default class UserRepositoryMemory implements UserRepository {
 	users: Array<User>;
