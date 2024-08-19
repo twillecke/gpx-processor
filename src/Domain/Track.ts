@@ -1,5 +1,5 @@
-import { TrackMetadata } from "./TrackRepository";
-import { ProcessedGPX } from "./TranslateGPX";
+import { TrackMetadata } from "../Repository/TrackRepository";
+import { ProcessedGPX } from "../UseCase/TranslateGPX";
 import crypto from "crypto";
 
 type FormMetadata = {

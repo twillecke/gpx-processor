@@ -1,4 +1,4 @@
-import Track, { Input } from "../../src/Track";
+import Track, { Input } from "../../src/Domain/Track";
 
 test("Should create Track", async () => {
 	const input: Input = {

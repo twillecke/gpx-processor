@@ -1,5 +1,5 @@
-import Track, { Input } from "./Track";
-import TrackRepositoryMemory from "./TrackRepository";
+import Track, { Input } from "../Domain/Track";
+import TrackRepositoryMemory from "../Repository/TrackRepository";
 
 export default class UserSaveNewTrack {
 	trackRepository: TrackRepositoryMemory;

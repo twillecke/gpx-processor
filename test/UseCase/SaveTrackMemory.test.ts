@@ -1,6 +1,6 @@
-import { Input } from "../../src/Track";
-import TrackRepositoryMemory from "../../src/TrackRepository";
-import UserSaveNewTrack from "../../src/UserSaveNewTrack";
+import { Input } from "../../src/Domain/Track";
+import TrackRepositoryMemory from "../../src/Repository/TrackRepository";
+import UserSaveNewTrack from "../../src/UseCase/UserSaveNewTrack";
 
 test("Should save Track in memory", async () => {
 	const input: Input = {

@@ -1,5 +1,5 @@
-import Track from "./Track";
-import { ProcessedGPX } from "./TranslateGPX";
+import Track from "../Domain/Track";
+import { ProcessedGPX } from "../UseCase/TranslateGPX";
 
 export type FullTrackData = {
 	metadata: TrackMetadata;

@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import multer from 'multer';
-import TranslateGPX from './TranslateGPX';
+import TranslateGPX from './UseCase/TranslateGPX';
 import { rateLimit } from 'express-rate-limit';
 const cors = require('cors');
 const compression = require('compression');
