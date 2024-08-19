@@ -4,7 +4,7 @@ import crypto from "crypto";
 
 type FormMetadata = {
 	title: string;
-	author: string;
+	authorId: string;
 	imageUrl?: string;
 };
 

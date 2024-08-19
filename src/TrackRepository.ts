@@ -9,7 +9,7 @@ export type FullTrackData = {
 export type TrackMetadata = {
 	trackId: string;
 	title: string;
-	author: string;
+	authorId: string;
 	imageUrl?: string;
 	createdAt: Date;
 };
@@ -17,7 +17,7 @@ export type TrackMetadata = {
 interface TrackRepository {
 	getAllTracks(): Array<FullTrackData>;
 	getAllTracksMetadata(): Array<TrackMetadata>;
-	getTrack(id: string): FullTrackData;
+	getTrackById(id: string): FullTrackData;
 	saveTrack(track: FullTrackData): void;
 	removeTrack(id: string): void;
 }
@@ -33,7 +33,7 @@ export default class TrackRepositoryMemory implements TrackRepository {
 		return this.tracks.map((track) => track.metadata);
 	}
 
-	getTrack(id: string): FullTrackData {
+	getTrackById(id: string): FullTrackData {
 		const track = this.tracks.find(
 			(track) => track.metadata.trackId === id,
 		);
@@ -43,8 +43,9 @@ export default class TrackRepositoryMemory implements TrackRepository {
 		return track;
 	}
 
-	saveTrack(track: Track): void {
+	saveTrack(track: Track): string {
 		this.tracks.push(track);
+		return track.metadata.trackId;
 	}
 
 	removeTrack(id: string): void {
