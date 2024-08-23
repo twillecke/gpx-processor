@@ -13,6 +13,8 @@ export type TrackMetadata = {
 	authorId: string;
 	imageUrl?: string;
 	createdAt: Date;
+	totalDistance?: number;
+	elevationGain?: number;
 };
 
 export default class TrackRepositoryMemory implements TrackRepository {
