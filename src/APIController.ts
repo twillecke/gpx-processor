@@ -4,7 +4,7 @@ import UserSaveNewTrack from "./UseCase/UserSaveNewTrack";
 import { TrackRepository } from "./Repository/RepositoryInterfaces";
 import multer from "multer";
 
-interface APIControllerDependencies {
+export interface APIControllerDependencies {
 	uploadMiddleware: multer.Multer;
 	trackRepository: TrackRepository;
 }
