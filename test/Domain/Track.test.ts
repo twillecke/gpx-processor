@@ -6,6 +6,8 @@ test("Should create Track", async () => {
 			title: "Lagoinha do Leste",
 			authorId: "b1c1b2b6-7d2b-4a2b-8b2b-4b2b7b2b2b2b",
 			imageUrl: "./image/1.png",
+			elevationGain: 670.9899999999996,
+			totalDistance: 9.32,
 		},
 		trackData: {
 			location: {
@@ -189,9 +191,9 @@ test("Should create Track", async () => {
 
 	expect(track.metadata.trackId).toBeTruthy();
 	expect(track.metadata.createdAt).toBeTruthy();
-	expect(track.metadata.title).toBe("Lagoinha do Leste");
-	expect(track.metadata.authorId).toBe("b1c1b2b6-7d2b-4a2b-8b2b-4b2b7b2b2b2b");
-	expect(track.metadata.imageUrl).toBe("./image/1.png");
+	expect(track.metadata.title).toBe(input.metadata.title);
+	expect(track.metadata.authorId).toBe(input.metadata.authorId);
+	expect(track.metadata.imageUrl).toBe(input.metadata.imageUrl);
 	expect(track.trackData.location).toEqual({
 		lat: -27.77901,
 		lon: -48.50634,

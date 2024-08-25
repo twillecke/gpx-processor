@@ -6,6 +6,8 @@ type FormMetadata = {
 	title: string;
 	authorId: string;
 	imageUrl?: string;
+	elevationGain?: number;
+	totalDistance?: number;
 };
 
 export type Input = {
