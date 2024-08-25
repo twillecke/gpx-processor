@@ -5,7 +5,7 @@ export interface TrackRepository {
 	getAllTracks(): Array<FullTrackData>;
 	getAllTracksMetadata(): Array<TrackMetadata>;
 	getTrackById(id: string): FullTrackData;
-	saveTrack(track: FullTrackData): void;
+	saveTrack(track: FullTrackData): string;
 	removeTrack(id: string): void;
 }
 

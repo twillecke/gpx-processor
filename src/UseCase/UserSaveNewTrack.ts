@@ -1,9 +1,9 @@
 import Track, { Input } from "../Domain/Track";
-import TrackRepositoryMemory from "../Repository/TrackRepositoryMemory";
+import { TrackRepository } from "../Repository/RepositoryInterfaces";
 
 export default class UserSaveNewTrack {
-	trackRepository: TrackRepositoryMemory;
-	constructor(trackRepository: TrackRepositoryMemory) {
+	trackRepository: TrackRepository;
+	constructor(trackRepository: TrackRepository) {
 		this.trackRepository = trackRepository;
 	}
 	async execute(input: Input): Promise<string> {
