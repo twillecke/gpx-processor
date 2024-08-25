@@ -10,16 +10,20 @@ export interface APIControllerDependencies {
 }
 
 export default class APIController {
-	private uploadMiddleware: multer.Multer;
-	private trackRepository: TrackRepository;
+	private uploadMiddleware!: multer.Multer;
+	private trackRepository!: TrackRepository;
 
 	constructor(
 		private app: express.Application,
 		dependencies: APIControllerDependencies,
 	) {
+		this.setupDependencies(dependencies);
+		this.setupRoutes();
+	}
+
+	private setupDependencies(dependencies: APIControllerDependencies) {
 		this.uploadMiddleware = dependencies.uploadMiddleware;
 		this.trackRepository = dependencies.trackRepository;
-		this.setupRoutes();
 	}
 
 	private setupRoutes() {
