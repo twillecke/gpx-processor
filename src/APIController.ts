@@ -15,10 +15,10 @@ export default class APIController {
 
 	constructor(
 		private app: express.Application,
-		{ trackRepository, uploadMiddleware }: APIControllerDependencies,
+		dependencies: APIControllerDependencies,
 	) {
-		this.uploadMiddleware = uploadMiddleware;
-		this.trackRepository = trackRepository;
+		this.uploadMiddleware = dependencies.uploadMiddleware;
+		this.trackRepository = dependencies.trackRepository;
 		this.setupRoutes();
 	}
 
