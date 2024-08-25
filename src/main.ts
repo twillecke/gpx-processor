@@ -4,6 +4,8 @@ import TrackRepositoryMemory from "./Repository/TrackRepositoryMemory";
 import APIController, { APIControllerDependencies } from "./APIController";
 import multer from "multer";
 import CheckEnvironmentVariables from "./CheckEnvironmentVariables";
+import { ResponseErrorHandler } from "./ResponseErrorHandler";
+
 const cors = require("cors");
 const compression = require("compression");
 dotenv.config();
@@ -13,6 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(compression());
 app.use(cors());
+app.use(ResponseErrorHandler);
 const apiControllerDependencies: APIControllerDependencies = {
 	uploadMiddleware: multer(),
 	trackRepository: new TrackRepositoryMemory(),
