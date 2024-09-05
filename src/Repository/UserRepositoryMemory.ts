@@ -12,8 +12,6 @@ export default class UserRepositoryMemory implements UserRepository {
 		this.users = [];
 	}
 	async getUserByEmail(email: string): Promise<User | undefined> {
-		console.log("getUserByEmail", email);
-		console.log("this.users", this.users);
 		const user = this.users.find((user) => user.email === email);
 		return Promise.resolve(user);
 	}
