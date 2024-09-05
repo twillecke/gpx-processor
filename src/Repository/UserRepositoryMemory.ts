@@ -2,7 +2,8 @@ import { UserRepository } from "./RepositoryInterfaces";
 
 export type User = {
 	userId: string;
-	name: string;
+	email: string;
+	password: string;
 };
 
 export default class UserRepositoryMemory implements UserRepository {
@@ -10,8 +11,15 @@ export default class UserRepositoryMemory implements UserRepository {
 	constructor() {
 		this.users = [];
 	}
-	async getUser(id: string): Promise<User> {
-		const user = this.users.find((user) => user.userId === id);
+	async getUserByEmail(email: string): Promise<User | undefined> {
+		console.log("getUserByEmail", email);
+		console.log("this.users", this.users);
+		const user = this.users.find((user) => user.email === email);
+		return Promise.resolve(user);
+	}
+
+	async getUserById(userId: string): Promise<User> {
+		const user = this.users.find((user) => user.userId === userId);
 		if (!user) {
 			throw new Error("User not found");
 		}

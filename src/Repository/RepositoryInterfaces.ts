@@ -10,7 +10,8 @@ export interface TrackRepository {
 }
 
 export interface UserRepository {
-	getUser(id: string): Promise<User>;
+	getUserById(id: string): Promise<User>;
+	getUserByEmail(email: string): Promise<User | undefined>;
 	saveUser(user: User): Promise<string>;
 	removeUser(id: string): Promise<void>;
 }
