@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export default class CheckEnvironmentVariables {
-	private static readonly REQUIRED_ENV_VARS: string[] = ["PORT"];
+	private static readonly REQUIRED_ENV_VARS: string[] = ["PORT", "ENCRYPTION_SALT_ROUNDS"];
 
 	static execute(): void {
 		this.REQUIRED_ENV_VARS.forEach((varName) => {

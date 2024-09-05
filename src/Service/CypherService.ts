@@ -5,9 +5,9 @@ export default class CypherService {
 	constructor(readonly bcrypt: any) {}
 
 	static async encrypt(password: string): Promise<string> {
-		dotenv.config();
+		dotenv.config({ path: __dirname + '/../..' + '/.env' });		
 		const saltRounds =
-			parseInt(process.env.ENCRYPTION_SALT_ROUNDS as string) || 10;
+		parseInt(process.env.ENCRYPTION_SALT_ROUNDS as string);
 		return await bcrypt.hash(password, saltRounds);
 	}
 
