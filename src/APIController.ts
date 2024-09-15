@@ -8,6 +8,7 @@ import {
 import multer from "multer";
 import { asyncHandler } from "./ResponseErrorHandler";
 import UserSignUp from "./UseCase/UserSignUp";
+import UserSignIn from "./UseCase/UserSignIn";
 export interface APIControllerDependencies {
 	uploadMiddleware: multer.Multer;
 	trackRepository: TrackRepository;
@@ -51,6 +52,7 @@ export default class APIController {
 			asyncHandler(this.getAllTracksMetadata),
 		);
 		this.app.post("/create-user", asyncHandler(this.createUser));
+		this.app.post("/sign-in-user", asyncHandler(this.signInUser));
 		this.app.get("/user", (req: Request, res: Response) => {
 			asyncHandler(this.getAllUsers(req, res));
 		});
@@ -117,6 +119,19 @@ export default class APIController {
 		if (!output) return res.status(500).send("Error saving user.");
 		res.status(200).json({ userId: output });
 	};
+
+	private signInUser = async (req: Request, res: Response) => {
+		const input = {
+			email: req.body.email,
+			password: req.body.password,
+		};
+		if (!input.email || !input.password)
+			return res.status(400).send("Invalid input.");
+		const userSignIn = new UserSignIn(this.userRepository);
+		const output = await userSignIn.execute(input);
+		if (!output) return res.status(500).send("Error signing in user.");
+		res.status(200).json({ accessToken: output });
+	}
 
 	private getAllUsers = async (req: Request, res: Response) => {
 		try {
