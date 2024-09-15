@@ -15,7 +15,6 @@ export default class UserRepositoryMemory implements UserRepository {
 		const user = this.users.find((user) => user.email === email);
 		return Promise.resolve(user);
 	}
-
 	async getUserById(userId: string): Promise<User> {
 		const user = this.users.find((user) => user.userId === userId);
 		if (!user) {
@@ -30,7 +29,7 @@ export default class UserRepositoryMemory implements UserRepository {
 	async removeUser(id: string): Promise<void> {
 		this.users = this.users.filter((user) => user.userId !== id);
 	}
-	getAllUsers() {
+	async getAllUsers() {
 		return this.users;
 	}
 }

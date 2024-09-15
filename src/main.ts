@@ -5,6 +5,7 @@ import APIController, { APIControllerDependencies } from "./APIController";
 import multer from "multer";
 import CheckEnvironmentVariables from "./CheckEnvironmentVariables";
 import { ResponseErrorHandler } from "./ResponseErrorHandler";
+import UserRepositoryMemory from "./Repository/UserRepositoryMemory";
 
 const cors = require("cors");
 const compression = require("compression");
@@ -19,6 +20,7 @@ app.use(ResponseErrorHandler);
 const apiControllerDependencies: APIControllerDependencies = {
 	uploadMiddleware: multer(),
 	trackRepository: new TrackRepositoryMemory(),
+	userRepository: new UserRepositoryMemory(),
 };
 new APIController(app, apiControllerDependencies);
 
