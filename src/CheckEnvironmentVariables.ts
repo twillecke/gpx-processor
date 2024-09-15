@@ -2,7 +2,12 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export default class CheckEnvironmentVariables {
-	private static readonly REQUIRED_ENV_VARS: string[] = ["PORT", "ENCRYPTION_SALT_ROUNDS"];
+	private static readonly REQUIRED_ENV_VARS: string[] = [
+		"PORT", 
+		"ENCRYPTION_SALT_ROUNDS",
+		"JWT_SECRET",
+		"JWT_EXPIRATION_TIME",
+	];
 
 	static execute(): void {
 		this.REQUIRED_ENV_VARS.forEach((varName) => {
