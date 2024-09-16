@@ -6,6 +6,13 @@ export default class User {
 	password: string;
 
 	private constructor(userId: string, email: string, password: string) {
+		if (!email || !password) {
+			throw new Error("Invalid input.");
+		}
+		const emailRegex = /\S+@\S+\.\S+/;
+		if (!emailRegex.test(email)) {
+			throw new Error("Invalid email.");
+		}
 		this.userId = userId;
 		this.email = email;
 		this.password = password;
