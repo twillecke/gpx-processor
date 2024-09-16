@@ -9,6 +9,7 @@ import multer from "multer";
 import { asyncHandler } from "./ResponseErrorHandler";
 import UserSignUp from "./UseCase/UserSignUp";
 import UserSignIn from "./UseCase/UserSignIn";
+import UserAuthenticationService from "./Service/AuthenticationService";
 export interface APIControllerDependencies {
 	uploadMiddleware: multer.Multer;
 	trackRepository: TrackRepository;
@@ -56,6 +57,9 @@ export default class APIController {
 		this.app.get("/user", (req: Request, res: Response) => {
 			asyncHandler(this.getAllUsers(req, res));
 		});
+		this.app.post("/authenticate", (req: Request, res: Response) => {
+			asyncHandler(this.authenticate(req, res));
+		});
 	}
 
 	private translateGpx = async (req: Request, res: Response) => {
@@ -80,6 +84,7 @@ export default class APIController {
 		};
 		if (!input.metadata || !input.trackData)
 			return res.status(400).send("Invalid input.");
+		// get userId from JWT token
 		const userSaveNewTrack = new UserSaveNewTrack(this.trackRepository);
 		const output = await userSaveNewTrack.execute({
 			metadata: req.body.metadata,
@@ -130,8 +135,8 @@ export default class APIController {
 		const userSignIn = new UserSignIn(this.userRepository);
 		const output = await userSignIn.execute(input);
 		if (!output) return res.status(500).send("Error signing in user.");
-		res.status(200).json({ accessToken: output });
-	}
+		res.status(200).json(output);
+	};
 
 	private getAllUsers = async (req: Request, res: Response) => {
 		try {
@@ -139,6 +144,19 @@ export default class APIController {
 			res.status(200).json(users);
 		} catch (error) {
 			res.status(500).send("Error fetching users.");
+		}
+	};
+
+	private authenticate = async (req: Request, res: Response) => {
+		const authHeader = req.headers.authorization;
+		if (!authHeader) return res.status(401).send("No token provided.");
+		try {
+			const isValidToken =
+				UserAuthenticationService.verifyJWT(authHeader);
+			if (!isValidToken) return res.status(401).send("Invalid token.");
+			return res.status(200).send("Authenticated.");
+		} catch (error) {
+			return res.status(500).send("Error verifying token.");
 		}
 	};
 }
