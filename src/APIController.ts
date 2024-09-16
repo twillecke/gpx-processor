@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import TranslateGPX from "./UseCase/TranslateGPX";
 import UserSaveNewTrack from "./UseCase/UserSaveNewTrack";
 import {
@@ -56,9 +56,6 @@ export default class APIController {
 		this.app.post("/sign-in-user", asyncHandler(this.signInUser));
 		this.app.get("/user", (req: Request, res: Response) => {
 			asyncHandler(this.getAllUsers(req, res));
-		});
-		this.app.post("/authenticate", (req: Request, res: Response) => {
-			asyncHandler(this.authenticate(req, res));
 		});
 	}
 
@@ -147,16 +144,18 @@ export default class APIController {
 		}
 	};
 
-	private authenticate = async (req: Request, res: Response) => {
+	private authenticate = async (
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	) => {
 		const authHeader = req.headers.authorization;
-		if (!authHeader) return res.status(401).send("No token provided.");
+		if (!authHeader) return next(new Error("No token provided."));
 		try {
-			const isValidToken =
-				UserAuthenticationService.verifyJWT(authHeader);
-			if (!isValidToken) return res.status(401).send("Invalid token.");
-			return res.status(200).send("Authenticated.");
+			UserAuthenticationService.verifyJWT(authHeader);
+			next();
 		} catch (error) {
-			return res.status(500).send("Error verifying token.");
+			next(new Error("Authentication failed."));
 		}
 	};
 }
