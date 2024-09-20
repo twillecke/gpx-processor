@@ -48,6 +48,7 @@ export default class APIController {
 		);
 		this.app.get("/track", asyncHandler(this.getAllTracks));
 		this.app.get("/track/:trackId", asyncHandler(this.getTrackById));
+		this.app.delete("/track/:trackId", asyncHandler(this.deleteTrackById));
 		this.app.get(
 			"/track-metadata",
 			asyncHandler(this.getAllTracksMetadata),
@@ -84,7 +85,6 @@ export default class APIController {
 			metadata: updateMetadata,
 			trackData: req.body.trackData,
 		};
-		console.log(input)
 		if (!input.metadata || !input.trackData)
 			return res.status(400).send("Invalid input.");
 		const userSaveNewTrack = new UserSaveNewTrack(this.trackRepository);
@@ -104,6 +104,25 @@ export default class APIController {
 		);
 		if (!track) return res.status(404).send("Track not found.");
 		res.status(200).json(track);
+	};
+
+	private deleteTrackById = async (req: Request, res: Response) => {
+		const authHeader = req.headers.authorization;
+		if (!authHeader) return res.status(401).send("Invalid token.");
+		try {
+			const jwtPayload = UserAuthenticationService.verifyJWT(authHeader);
+			const track = await this.trackRepository.getTrackById(
+				req.params.trackId,
+			);
+			if (track.metadata.authorId === jwtPayload.userId) {
+				await this.trackRepository.deleteTrackbyTrackId(
+					req.params.trackId,
+				);
+			}
+			res.status(204).send("Track deleted.");
+		} catch (error) {
+			res.send(error);
+		}
 	};
 
 	private getAllTracksMetadata = async (req: Request, res: Response) => {

@@ -43,7 +43,7 @@ export default class TrackRepositoryMemory implements TrackRepository {
 		return track.metadata.trackId;
 	}
 
-	removeTrack(id: string): void {
+	deleteTrackbyTrackId(id: string): void {
 		this.tracks = this.tracks.filter(
 			(track) => track.metadata.trackId !== id,
 		);

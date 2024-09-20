@@ -6,7 +6,7 @@ export interface TrackRepository {
 	getAllTracksMetadata(): Array<TrackMetadata>;
 	getTrackById(id: string): FullTrackData;
 	saveTrack(track: FullTrackData): string;
-	removeTrack(id: string): void;
+	deleteTrackbyTrackId(id: string): void;
 }
 
 export interface UserRepository {
