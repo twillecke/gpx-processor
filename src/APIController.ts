@@ -73,20 +73,22 @@ export default class APIController {
 	};
 
 	private saveTrack = async (req: Request, res: Response) => {
-		// TODO: Add validation for metadata and trackData
-		// TODO: Pass the authorId from the JWT token
+		const authHeader = req.headers.authorization;
+		if (!authHeader) return res.status(401).send("Invalid token.");
+		const jwtPayload = UserAuthenticationService.verifyJWT(authHeader);
+		const updateMetadata = {
+			...req.body.metadata,
+			authorId: jwtPayload.userId,
+		};
 		const input = {
-			metadata: req.body.metadata,
+			metadata: updateMetadata,
 			trackData: req.body.trackData,
 		};
+		console.log(input)
 		if (!input.metadata || !input.trackData)
 			return res.status(400).send("Invalid input.");
-		// get userId from JWT token
 		const userSaveNewTrack = new UserSaveNewTrack(this.trackRepository);
-		const output = await userSaveNewTrack.execute({
-			metadata: req.body.metadata,
-			trackData: req.body.trackData,
-		});
+		const output = await userSaveNewTrack.execute(input);
 		if (!output) return res.status(500).send("Error saving track.");
 		res.status(200).json({ trackId: output });
 	};
