@@ -31,6 +31,9 @@ export default class UserSignIn {
 			existingUser.userId,
 		);
 
-		return accessToken;
+		return {
+			accessToken: accessToken.accessToken,
+			userId: existingUser.userId,
+		};
 	}
 }
