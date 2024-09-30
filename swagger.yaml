@@ -1,0 +1,126 @@
+swagger: '2.0'
+info:
+  title: Track API
+  version: 1.0.0
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /translate-gpx:
+    post:
+      summary: Translate GPX file
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: file
+          type: file
+          description: The file to upload.
+      responses:
+        200:
+          description: File uploaded and processed successfully.
+        400:
+          description: No file uploaded.
+  /track:
+    post:
+      summary: Save new track
+      security:
+        - Bearer: []
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: file
+          type: file
+          description: The file to upload.
+      responses:
+        200:
+          description: Track saved successfully.
+        400:
+          description: Invalid input.
+        401:
+          description: Invalid token.
+        500:
+          description: Error saving track.
+    get:
+      summary: Get all tracks
+      responses:
+        200:
+          description: A list of all tracks.
+  /track/{trackId}:
+    get:
+      summary: Get track by ID
+      parameters:
+        - in: path
+          name: trackId
+          required: true
+          type: string
+      responses:
+        200:
+          description: Track details.
+        404:
+          description: Track not found.
+    delete:
+      summary: Delete track by ID
+      security:
+        - Bearer: []
+      parameters:
+        - in: path
+          name: trackId
+          required: true
+          type: string
+      responses:
+        204:
+          description: Track deleted.
+        401:
+          description: Invalid token.
+  /track-metadata:
+    get:
+      summary: Get metadata for all tracks
+      responses:
+        200:
+          description: A list of all track metadata.
+  /create-user:
+    post:
+      summary: Create new user
+      parameters:
+        - in: body
+          name: user
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        200:
+          description: User created successfully.
+        400:
+          description: Invalid input.
+        500:
+          description: Error saving user.
+  /sign-in-user:
+    post:
+      summary: Sign in user
+      security:
+        - Bearer: []
+      parameters:
+        - in: body
+          name: user
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        200:
+          description: User signed in successfully.
+        400:
+          description: Invalid input.
+        500:
+          description: Error signing in user.

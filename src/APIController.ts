@@ -55,9 +55,9 @@ export default class APIController {
 		);
 		this.app.post("/create-user", asyncHandler(this.createUser));
 		this.app.post("/sign-in-user", asyncHandler(this.signInUser));
-		this.app.get("/user", (req: Request, res: Response) => {
-			asyncHandler(this.getAllUsers(req, res));
-		});
+		// this.app.get("/user", (req: Request, res: Response) => {
+		// 	asyncHandler(this.getAllUsers(req, res));
+		// });
 	}
 
 	private translateGpx = async (req: Request, res: Response) => {
