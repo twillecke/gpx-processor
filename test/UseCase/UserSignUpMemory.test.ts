@@ -11,15 +11,15 @@ test("Should sign up a user", async () => {
 	const userSignUpOutput = await userSignUp.execute(input);
 	const storedUser = await userRepositoryMemory.getUserById(userSignUpOutput);
 
-	expect(userSignUpOutput).toBe(storedUser.userId);
-	expect(storedUser.email).toBe(input.email);
+	expect(userSignUpOutput).toBe(storedUser.user_id);
+	expect(storedUser.email_address).toBe(input.email);
 	console.log("repositoryState", userRepositoryMemory.users);
 });
 
 test("Should not sign up a user with the same email", async () => {
 	const userRepositoryMemory = new UserRepositoryMemory();
 	const input = {
-		email: "john.doe",
+		email: "john.doe@mail.com",
 		password: "1234",
 	};
 	const userSignUp = new UserSignUp(userRepositoryMemory);
