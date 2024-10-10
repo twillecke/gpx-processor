@@ -60,7 +60,41 @@ export default class TrackRepositoryDatabase implements TrackRepository {
 		return fullTrackData;
 	}
 	async saveTrack(track: FullTrackData): Promise<string> {
-		throw new Error("Method not implemented.");
+		const { metadata, trackData } = track;
+		const {
+			trackId,
+			createdAt,
+			title,
+			authorId,
+			imageUrl,
+			totalDistance,
+			elevationGain,
+			location,
+		} = metadata;
+		await this.connection.query(
+			` INSERT INTO trail_metadata 
+			(track_id, created_at, title, author_id, image_url, total_distance, elevation_gain, location) 
+		VALUES 
+			($1, $2, $3, $4, $5, $6, $7, $8)`,
+			[
+				trackId,
+				createdAt,
+				title,
+				authorId,
+				imageUrl,
+				totalDistance,
+				elevationGain,
+				location,
+			],
+		);
+		await this.connection.query(
+			` INSERT INTO trail_data 
+			(track_id, track_info) 
+		VALUES 
+			($1, $2)`,
+			[trackId, trackData],
+		);
+		return trackId;
 	}
 	async deleteTrackbyTrackId(id: string): Promise<void> {
 		throw new Error("Method not implemented.");

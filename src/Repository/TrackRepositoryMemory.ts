@@ -8,6 +8,7 @@ export type FullTrackData = {
 };
 
 export type TrackMetadata = {
+	location?: string;
 	trackId: string;
 	title: string;
 	authorId: string;
