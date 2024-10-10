@@ -6,6 +6,8 @@ import multer from "multer";
 import CheckEnvironmentVariables from "./CheckEnvironmentVariables";
 import { ResponseErrorHandler } from "./ResponseErrorHandler";
 import UserRepositoryMemory from "./Repository/UserRepositoryMemory";
+import UserRepositoryDatabase from "./Repository/UserRepositoryDatabase";
+import { PgPromiseAdapter } from "./infra/database/DatabaseConnection";
 
 const cors = require("cors");
 const compression = require("compression");
@@ -17,10 +19,12 @@ app.use(express.json());
 app.use(compression());
 app.use(cors());
 app.use(ResponseErrorHandler);
+const connection = new PgPromiseAdapter();
 const apiControllerDependencies: APIControllerDependencies = {
 	uploadMiddleware: multer(),
 	trackRepository: new TrackRepositoryMemory(),
-	userRepository: new UserRepositoryMemory(),
+	// userRepository: new UserRepositoryMemory(),
+	userRepository: new UserRepositoryDatabase(connection)
 };
 new APIController(app, apiControllerDependencies);
 
