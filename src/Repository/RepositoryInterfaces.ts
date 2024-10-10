@@ -1,4 +1,5 @@
 import { FullTrackData, TrackMetadata } from "./TrackRepositoryMemory";
+import { UserDAO } from "./UserRepositoryDatabase";
 import { User } from "./UserRepositoryMemory";
 
 export interface TrackRepository {
@@ -10,9 +11,9 @@ export interface TrackRepository {
 }
 
 export interface UserRepository {
-	getAllUsers(): Promise<Array<User>>;
-	getUserById(id: string): Promise<User>;
-	getUserByEmail(email: string): Promise<User | undefined>;
+	getAllUsers(): Promise<Array<UserDAO>>;
+	getUserById(id: string): Promise<UserDAO>;
+	getUserByEmail(email: string): Promise<UserDAO | undefined>;
 	saveUser(user: User): Promise<string>;
 	removeUser(id: string): Promise<void>;
 }

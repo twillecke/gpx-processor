@@ -21,19 +21,19 @@ export default class UserSignIn {
 		}
 		const isValidPassword = await CypherService.compare(
 			input.password,
-			existingUser.password,
+			existingUser.hashed_password,
 		);
 		if (!isValidPassword) {
 			throw new Error("Invalid credentials");
 		}
 		const accessToken = UserAuthenticationService.generateJWT(
-			existingUser.email,
-			existingUser.userId,
+			existingUser.email_address,
+			existingUser.user_id,
 		);
 
 		return {
 			accessToken: accessToken.accessToken,
-			userId: existingUser.userId,
+			userId: existingUser.user_id,
 		};
 	}
 }

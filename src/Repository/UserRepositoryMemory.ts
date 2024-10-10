@@ -1,4 +1,5 @@
 import { UserRepository } from "./RepositoryInterfaces";
+import { UserDAO } from "./UserRepositoryDatabase";
 
 export type User = {
 	userId: string;
@@ -7,27 +8,34 @@ export type User = {
 };
 
 export default class UserRepositoryMemory implements UserRepository {
-	users: Array<User>;
+	users: Array<UserDAO>;
 	constructor() {
 		this.users = [];
 	}
-	async getUserByEmail(email: string): Promise<User | undefined> {
-		const user = this.users.find((user) => user.email === email);
-		return Promise.resolve(user);
+	async getUserByEmail(email: string): Promise<UserDAO | undefined> {
+		const user = await this.users.find(
+			(user) => user.email_address === email,
+		);
+		return user;
 	}
-	async getUserById(userId: string): Promise<User> {
-		const user = this.users.find((user) => user.userId === userId);
+	async getUserById(userId: string): Promise<UserDAO> {
+		const user = this.users.find((user) => user.user_id === userId);
 		if (!user) {
 			throw new Error("User not found");
 		}
 		return user;
 	}
 	async saveUser(user: User): Promise<string> {
-		this.users.push(user);
+		const queriedUser: UserDAO = {
+			user_id: user.userId,
+			email_address: user.email,
+			hashed_password: user.password, // You should hash the password before saving
+		};
+		this.users.push(queriedUser);
 		return user.userId;
 	}
 	async removeUser(id: string): Promise<void> {
-		this.users = this.users.filter((user) => user.userId !== id);
+		this.users = this.users.filter((user) => user.user_id !== id);
 	}
 	async getAllUsers() {
 		return this.users;
