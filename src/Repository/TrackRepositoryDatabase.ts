@@ -97,6 +97,13 @@ export default class TrackRepositoryDatabase implements TrackRepository {
 		return trackId;
 	}
 	async deleteTrackbyTrackId(id: string): Promise<void> {
-		throw new Error("Method not implemented.");
+		await this.connection.query(
+			` DELETE FROM trail_metadata WHERE track_id = $1`,
+			[id],
+		);
+		await this.connection.query(
+			` DELETE FROM trail_data WHERE track_id = $1`,
+			[id],
+		);
 	}
 }
