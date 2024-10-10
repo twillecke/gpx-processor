@@ -8,6 +8,7 @@ import { ResponseErrorHandler } from "./ResponseErrorHandler";
 import UserRepositoryMemory from "./Repository/UserRepositoryMemory";
 import UserRepositoryDatabase from "./Repository/UserRepositoryDatabase";
 import { PgPromiseAdapter } from "./infra/database/DatabaseConnection";
+import TrackRepositoryDatabase from "./Repository/TrackRepositoryDatabase";
 
 const cors = require("cors");
 const compression = require("compression");
@@ -22,7 +23,8 @@ app.use(ResponseErrorHandler);
 const connection = new PgPromiseAdapter();
 const apiControllerDependencies: APIControllerDependencies = {
 	uploadMiddleware: multer(),
-	trackRepository: new TrackRepositoryMemory(),
+	// trackRepository: new TrackRepositoryMemory(),
+	trackRepository: new TrackRepositoryDatabase(connection),
 	// userRepository: new UserRepositoryMemory(),
 	userRepository: new UserRepositoryDatabase(connection)
 };

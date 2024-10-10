@@ -1,10 +1,11 @@
+import { TrackMetadataDAO } from "./TrackRepositoryDatabase";
 import { FullTrackData, TrackMetadata } from "./TrackRepositoryMemory";
 import { UserDAO } from "./UserRepositoryDatabase";
 import { User } from "./UserRepositoryMemory";
 
 export interface TrackRepository {
 	getAllTracks(): Promise<Array<FullTrackData>>;
-	getAllTracksMetadata(): Promise<Array<TrackMetadata>>;
+	getAllTracksMetadata(): Promise<Array<TrackMetadataDAO>>;
 	getTrackById(id: string): Promise<FullTrackData>;
 	saveTrack(track: FullTrackData): Promise<string>;
 	deleteTrackbyTrackId(id: string): Promise<void>;
