@@ -3,11 +3,11 @@ import { UserDAO } from "./UserRepositoryDatabase";
 import { User } from "./UserRepositoryMemory";
 
 export interface TrackRepository {
-	getAllTracks(): Array<FullTrackData>;
-	getAllTracksMetadata(): Array<TrackMetadata>;
-	getTrackById(id: string): FullTrackData;
-	saveTrack(track: FullTrackData): string;
-	deleteTrackbyTrackId(id: string): void;
+	getAllTracks(): Promise<Array<FullTrackData>>;
+	getAllTracksMetadata(): Promise<Array<TrackMetadata>>;
+	getTrackById(id: string): Promise<FullTrackData>;
+	saveTrack(track: FullTrackData): Promise<string>;
+	deleteTrackbyTrackId(id: string): Promise<void>;
 }
 
 export interface UserRepository {
