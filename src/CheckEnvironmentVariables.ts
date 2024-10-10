@@ -3,10 +3,15 @@ dotenv.config();
 
 export default class CheckEnvironmentVariables {
 	private static readonly REQUIRED_ENV_VARS: string[] = [
-		"PORT", 
+		"PORT",
 		"ENCRYPTION_SALT_ROUNDS",
 		"JWT_SECRET",
 		"JWT_EXPIRATION_TIME",
+		"POSTGRES_PORT",
+		"POSTGRES_USER",
+		"POSTGRES_PASSWORD",
+		"POSTGRES_DB",
+		"POSTGRES_HOST",
 	];
 
 	static execute(): void {
