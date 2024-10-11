@@ -1,4 +1,4 @@
-import { UserRepository } from "../Repository/RepositoryInterfaces";
+import type { UserRepository } from "../Repository/RepositoryInterfaces";
 import UserAuthenticationService from "../Service/AuthenticationService";
 import CypherService from "../Service/CypherService";
 

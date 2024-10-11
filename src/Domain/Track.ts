@@ -1,6 +1,6 @@
-import { TrackMetadata } from "../Repository/TrackRepositoryMemory";
-import { ProcessedGPX } from "../UseCase/TranslateGPX";
-import crypto from "crypto";
+import type { TrackMetadata } from "../Repository/TrackRepositoryMemory";
+import type { ProcessedGPX } from "../UseCase/TranslateGPX";
+import crypto from "node:crypto";
 
 type FormMetadata = {
 	title: string;

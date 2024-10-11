@@ -1,5 +1,5 @@
-import Track, { Input } from "../Domain/Track";
-import { TrackRepository } from "../Repository/RepositoryInterfaces";
+import Track, { type Input } from "../Domain/Track";
+import type { TrackRepository } from "../Repository/RepositoryInterfaces";
 
 export default class UserSaveNewTrack {
 	trackRepository: TrackRepository;
@@ -7,7 +7,10 @@ export default class UserSaveNewTrack {
 		this.trackRepository = trackRepository;
 	}
 	async execute(input: Input): Promise<string> {
-		const track = await Track.create({ metadata: input.metadata, trackData: input.trackData });
+		const track = await Track.create({
+			metadata: input.metadata,
+			trackData: input.trackData,
+		});
 		const savedTrackId = this.trackRepository.saveTrack(track);
 		return savedTrackId;
 	}

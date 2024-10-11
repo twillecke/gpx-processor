@@ -1,7 +1,7 @@
-import { TrackMetadataDAO } from "./TrackRepositoryDatabase";
-import { FullTrackData, TrackMetadata } from "./TrackRepositoryMemory";
-import { UserDAO } from "./UserRepositoryDatabase";
-import { User } from "./UserRepositoryMemory";
+import type { TrackMetadataDAO } from "./TrackRepositoryDatabase";
+import type { FullTrackData } from "./TrackRepositoryMemory";
+import type { UserDAO } from "./UserRepositoryDatabase";
+import type { User } from "./UserRepositoryMemory";
 
 export interface TrackRepository {
 	getAllTracks(): Promise<Array<FullTrackData>>;

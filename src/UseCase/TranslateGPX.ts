@@ -1,4 +1,4 @@
-import { Gpx, parseGpx } from "practical-gpx-to-js";
+import { type Gpx, parseGpx } from "practical-gpx-to-js";
 
 type Segment = {
 	altitude: number | null;
@@ -12,8 +12,8 @@ type Waypoint = {
 };
 
 type Coordinates = {
-  lat: number;
-  lon: number;
+	lat: number;
+	lon: number;
 };
 
 export type ProcessedGPX = {
@@ -24,26 +24,33 @@ export type ProcessedGPX = {
 	elevationLoss: number; // how much you descend in total not counting climbs
 };
 
+// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export default class TranslateGPX {
-	// rome-ignore lint/suspicious/noExplicitAny: <explanation>
 	public static async execute(input: any): Promise<ProcessedGPX> {
 		const parsedGpx = await parseGpx(input);
 		const totalDistance = (
-			this.calculateTotalDistance(parsedGpx) / 1000
+			TranslateGPX.calculateTotalDistance(parsedGpx) / 1000
 		).toFixed(2); // returns distance in kilometers
-		const trackPoints = this.calculateDistanceAndElevation(parsedGpx); // returns array of objects with distance from start and altitude
-		const elevations = this.calculateElevations(parsedGpx);
+		const trackPoints =
+			TranslateGPX.calculateDistanceAndElevation(parsedGpx); // returns array of objects with distance from start and altitude
+		const elevations = TranslateGPX.calculateElevations(parsedGpx);
 		const output: ProcessedGPX = {
-			location: this.getValidLocationCoordinates(parsedGpx),
-			totalDistance: parseFloat(totalDistance),
-			segments: this.sampleArrayAtIntervals(trackPoints ?? [], 40),
+			location: TranslateGPX.getValidLocationCoordinates(parsedGpx),
+			totalDistance: Number.parseFloat(totalDistance),
+			segments: TranslateGPX.sampleArrayAtIntervals(
+				trackPoints ?? [],
+				40,
+			),
 			elevationGain: elevations.elevationGain,
 			elevationLoss: elevations.elevationLoss,
 		};
 		return output;
 	}
 
-	private static getValidLocationCoordinates(gpx: Gpx, track = 0): Coordinates | null{
+	private static getValidLocationCoordinates(
+		gpx: Gpx,
+		track = 0,
+	): Coordinates | null {
 		if (gpx.tracks?.[track]?.trackpoints) {
 			for (let i = 0; i < gpx.tracks[track].trackpoints.length - 1; i++) {
 				if (
@@ -57,7 +64,7 @@ export default class TranslateGPX {
 				}
 			}
 		}
-    return null;
+		return null;
 	}
 
 	private static calculateTotalDistance(gpx: Gpx, track = 0): number {
@@ -68,7 +75,7 @@ export default class TranslateGPX {
 				const lon1 = gpx.tracks[track].trackpoints[i].lon;
 				const lat2 = gpx.tracks[track].trackpoints[i + 1].lat;
 				const lon2 = gpx.tracks[track].trackpoints[i + 1].lon;
-				totalDistance += this.calculateHaversineDistance(
+				totalDistance += TranslateGPX.calculateHaversineDistance(
 					lat1,
 					lon1,
 					lat2,
@@ -114,8 +121,12 @@ export default class TranslateGPX {
 				const lat2 = gpx.tracks[track].trackpoints[i + 1].lat;
 				const lon2 = gpx.tracks[track].trackpoints[i + 1].lon;
 				const currentDistance =
-					this.calculateHaversineDistance(lat1, lon1, lat2, lon2) /
-					1000; // convert to kilometers
+					TranslateGPX.calculateHaversineDistance(
+						lat1,
+						lon1,
+						lat2,
+						lon2,
+					) / 1000; // convert to kilometers
 				totalDistance += currentDistance;
 				let currentAltitude =
 					gpx.tracks[track].trackpoints[i + 1].altitude;
@@ -123,7 +134,9 @@ export default class TranslateGPX {
 					currentAltitude = gpx.tracks[track].trackpoints[i].altitude;
 				result.push({
 					altitude: currentAltitude,
-					distanceFromStart: parseFloat(totalDistance.toFixed(2)),
+					distanceFromStart: Number.parseFloat(
+						totalDistance.toFixed(2),
+					),
 				});
 			}
 			return result;

@@ -1,11 +1,12 @@
-import express, { NextFunction, Request, Response } from "express";
+import type express from "express";
+import type { NextFunction, Request, Response } from "express";
 import TranslateGPX from "./UseCase/TranslateGPX";
 import UserSaveNewTrack from "./UseCase/UserSaveNewTrack";
-import {
+import type {
 	TrackRepository,
 	UserRepository,
 } from "./Repository/RepositoryInterfaces";
-import multer from "multer";
+import type multer from "multer";
 import { asyncHandler } from "./ResponseErrorHandler";
 import UserSignUp from "./UseCase/UserSignUp";
 import UserSignIn from "./UseCase/UserSignIn";

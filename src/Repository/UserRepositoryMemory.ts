@@ -1,5 +1,5 @@
-import { UserRepository } from "./RepositoryInterfaces";
-import { UserDAO } from "./UserRepositoryDatabase";
+import type { UserRepository } from "./RepositoryInterfaces";
+import type { UserDAO } from "./UserRepositoryDatabase";
 
 export type User = {
 	userId: string;

@@ -1,19 +1,18 @@
 import * as dotenv from "dotenv";
 import express from "express";
 import TrackRepositoryMemory from "./Repository/TrackRepositoryMemory";
-import APIController, { APIControllerDependencies } from "./APIController";
+import APIController, { type APIControllerDependencies } from "./APIController";
 import multer from "multer";
 import CheckEnvironmentVariables from "./CheckEnvironmentVariables";
 import { ResponseErrorHandler } from "./ResponseErrorHandler";
 import UserRepositoryMemory from "./Repository/UserRepositoryMemory";
 import UserRepositoryDatabase from "./Repository/UserRepositoryDatabase";
-import { PgPromiseAdapter } from "./infra/database/DatabaseConnection";
 import TrackRepositoryDatabase from "./Repository/TrackRepositoryDatabase";
+import { PgPromiseAdapter } from "./infra/database/DatabaseConnection";
+import cors from "cors";
+import compression from "compression";
 
-const cors = require("cors");
-const compression = require("compression");
 dotenv.config();
-
 CheckEnvironmentVariables.execute();
 const app = express();
 app.use(express.json());
@@ -26,7 +25,7 @@ const apiControllerDependencies: APIControllerDependencies = {
 	// trackRepository: new TrackRepositoryMemory(),
 	trackRepository: new TrackRepositoryDatabase(connection),
 	// userRepository: new UserRepositoryMemory(),
-	userRepository: new UserRepositoryDatabase(connection)
+	userRepository: new UserRepositoryDatabase(connection),
 };
 new APIController(app, apiControllerDependencies);
 

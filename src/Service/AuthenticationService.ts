@@ -1,21 +1,19 @@
 import jwt from "jsonwebtoken";
 
+// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 class UserAuthenticationService {
 	private static jwtSecret: string = process.env.JWT_SECRET || "123";
-	private static jwtExpirationTime: number = parseInt(
+	private static jwtExpirationTime: number = Number.parseInt(
 		process.env.JWT_EXPIRATION_TIME || "5000",
 		10,
 	);
 
-	static generateJWT(
-		email: string,
-		userId: string,
-	): { accessToken: string } {
+	static generateJWT(email: string, userId: string): { accessToken: string } {
 		if (!UserAuthenticationService.jwtSecret) {
 			throw new Error("JWT secret not provided");
 		}
 
-		if (isNaN(UserAuthenticationService.jwtExpirationTime)) {
+		if (Number.isNaN(UserAuthenticationService.jwtExpirationTime)) {
 			throw new Error("Invalid JWT expiration time");
 		}
 

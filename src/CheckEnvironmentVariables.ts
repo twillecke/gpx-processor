@@ -1,6 +1,7 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
+// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export default class CheckEnvironmentVariables {
 	private static readonly REQUIRED_ENV_VARS: string[] = [
 		"PORT",
@@ -15,13 +16,13 @@ export default class CheckEnvironmentVariables {
 	];
 
 	static execute(): void {
-		this.REQUIRED_ENV_VARS.forEach((varName) => {
+		for (const varName of CheckEnvironmentVariables.REQUIRED_ENV_VARS) {
 			if (!process.env[varName]) {
 				console.error(
 					`Error: Required environment variable ${varName} is not defined`,
 				);
 				process.exit(1);
 			}
-		});
+		}
 	}
 }

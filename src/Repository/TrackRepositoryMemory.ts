@@ -1,6 +1,7 @@
-import Track from "../Domain/Track";
-import { ProcessedGPX } from "../UseCase/TranslateGPX";
-import { TrackRepository } from "./RepositoryInterfaces";
+import type Track from "../Domain/Track";
+import type { ProcessedGPX } from "../UseCase/TranslateGPX";
+import type { TrackRepository } from "./RepositoryInterfaces";
+import type { TrackMetadataDAO } from "./TrackRepositoryDatabase";
 
 export type FullTrackData = {
 	metadata: TrackMetadata;
@@ -25,8 +26,20 @@ export default class TrackRepositoryMemory implements TrackRepository {
 		return this.tracks;
 	}
 
-	async getAllTracksMetadata(): Promise<Array<TrackMetadata>> {
-		return this.tracks.map((track) => track.metadata);
+	async getAllTracksMetadata(): Promise<Array<TrackMetadataDAO>> {
+		const tracksMetadata = this.tracks.map((track) => {
+			return {
+				trackId: track.metadata.trackId,
+				created_at: track.metadata.createdAt.toISOString(),
+				title: track.metadata.title,
+				author_id: track.metadata.authorId,
+				image_url: track.metadata.imageUrl,
+				location: track.metadata.location,
+				total_distance: track.metadata.totalDistance,
+				elevation_gain: track.metadata.elevationGain,
+			};
+		});
+		return tracksMetadata;
 	}
 
 	async getTrackById(id: string): Promise<FullTrackData> {

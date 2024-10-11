@@ -1,6 +1,6 @@
-import DataBaseConnection from "../infra/database/DatabaseConnection";
-import { UserRepository } from "./RepositoryInterfaces";
-import { User } from "./UserRepositoryMemory";
+import type DataBaseConnection from "../infra/database/DatabaseConnection";
+import type { UserRepository } from "./RepositoryInterfaces";
+import type { User } from "./UserRepositoryMemory";
 
 export type UserDAO = {
 	user_id: string;

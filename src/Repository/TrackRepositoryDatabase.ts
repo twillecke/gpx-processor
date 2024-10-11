@@ -1,6 +1,6 @@
-import DataBaseConnection from "../infra/database/DatabaseConnection";
-import { TrackRepository } from "./RepositoryInterfaces";
-import { FullTrackData } from "./TrackRepositoryMemory";
+import type DataBaseConnection from "../infra/database/DatabaseConnection";
+import type { TrackRepository } from "./RepositoryInterfaces";
+import type { FullTrackData } from "./TrackRepositoryMemory";
 
 export type TrackMetadataDAO = {
 	trail_id: string;
@@ -98,11 +98,11 @@ export default class TrackRepositoryDatabase implements TrackRepository {
 	}
 	async deleteTrackbyTrackId(id: string): Promise<void> {
 		await this.connection.query(
-			` DELETE FROM trail_metadata WHERE track_id = $1`,
+			"DELETE FROM trail_metadata WHERE track_id = $1",
 			[id],
 		);
 		await this.connection.query(
-			` DELETE FROM trail_data WHERE track_id = $1`,
+			"DELETE FROM trail_data WHERE track_id = $1",
 			[id],
 		);
 	}
