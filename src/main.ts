@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(compression());
 app.use(
 	cors({
-		origin: "*",
+		origin: process.env.CORS_ORIGIN,
 	}),
 );
 app.use(ResponseErrorHandler);
