@@ -1,4 +1,4 @@
-import { Input } from "../../src/Domain/Track";
+import type { Input } from "../../src/Domain/Track";
 import TrackRepositoryMemory from "../../src/Repository/TrackRepositoryMemory";
 import UserSaveNewTrack from "../../src/UseCase/UserSaveNewTrack";
 
@@ -9,7 +9,7 @@ test("Should save Track in memory", async () => {
 			authorId: "b1c1b2b6-7d2b-4a2b-8b2b-4b2b7b2b2b2b",
 			imageUrl: "./image/1.png",
 			totalDistance: 9.32,
-			elevationGain: 670.9899999999996
+			elevationGain: 670.9899999999996,
 		},
 		trackData: {
 			location: {
@@ -193,14 +193,11 @@ test("Should save Track in memory", async () => {
 	const userSaveTrack = new UserSaveNewTrack(trackRepositoryMemory);
 
 	const savedTrackId = await userSaveTrack.execute(input);
-	const savedTrack = trackRepositoryMemory.getTrackById(savedTrackId);
+	const savedTrack = await trackRepositoryMemory.getTrackById(savedTrackId);
 
 	expect(savedTrack.metadata.title).toBe(input.metadata.title);
-	expect(savedTrack.metadata.authorId).toBe(
-		input.metadata.authorId,
-	);
+	expect(savedTrack.metadata.authorId).toBe(input.metadata.authorId);
 	expect(savedTrack.metadata.imageUrl).toBe(input.metadata.imageUrl);
 	expect(savedTrack.metadata.trackId).toBe(savedTrackId);
 	expect(savedTrack.metadata.createdAt).toBeInstanceOf(Date);
-
 });
