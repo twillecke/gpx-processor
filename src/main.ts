@@ -17,7 +17,11 @@ CheckEnvironmentVariables.execute();
 const app = express();
 app.use(express.json());
 app.use(compression());
-app.use(cors());
+app.use(
+	cors({
+		origin: "*",
+	}),
+);
 app.use(ResponseErrorHandler);
 const connection = new PgPromiseAdapter();
 const apiControllerDependencies: APIControllerDependencies = {
