@@ -3,14 +3,14 @@ import type { TrackRepository } from "./RepositoryInterfaces";
 import type { FullTrackData } from "./TrackRepositoryMemory";
 
 export type TrackMetadataDAO = {
-	trail_id: string;
+	track_id: string;
 	created_at: string;
 	title: string;
 	author_id: string;
-	image_url: string;
+	image_url?: string;
 	location: string;
-	total_distance: number;
-	elevation_gain: number;
+	total_distance?: number;
+	elevation_gain?: number;
 };
 
 export default class TrackRepositoryDatabase implements TrackRepository {
@@ -26,8 +26,10 @@ export default class TrackRepositoryDatabase implements TrackRepository {
 		);
 		if (!tracksMetadata || tracksMetadata.length < 1) return [];
 		tracksMetadata.map((track: TrackMetadataDAO) => {
-			track.elevation_gain = +track.elevation_gain;
-			track.total_distance = +track.total_distance;
+			if (track.elevation_gain && track.total_distance) {
+				track.elevation_gain = +track.elevation_gain;
+				track.total_distance = +track.total_distance;
+			}
 		});
 		return tracksMetadata;
 	}

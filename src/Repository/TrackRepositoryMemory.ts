@@ -29,12 +29,12 @@ export default class TrackRepositoryMemory implements TrackRepository {
 	async getAllTracksMetadata(): Promise<Array<TrackMetadataDAO>> {
 		const tracksMetadata = this.tracks.map((track) => {
 			return {
-				trackId: track.metadata.trackId,
+				track_id: track.metadata.trackId,
 				created_at: track.metadata.createdAt.toISOString(),
 				title: track.metadata.title,
 				author_id: track.metadata.authorId,
-				image_url: track.metadata.imageUrl,
-				location: track.metadata.location,
+				image_url: track.metadata.imageUrl || "default_image_url", // Provide a default value
+				location: track.metadata.location || "default_location", // Provide a default value
 				total_distance: track.metadata.totalDistance,
 				elevation_gain: track.metadata.elevationGain,
 			};
